@@ -3,7 +3,7 @@
 ### Summary
 
 The Task is to create a web page that fetches an array of objects from an API and displays them as a grid of cards.
- Each card will have a button to toggle selection, changing the background color and updating a counter at the top. Additional buttons will allow selecting all and deselecting all items. The entire implementation must be done using JavaScript only (no CSS files, styling through JS).
+Each card will have a button to toggle selection, changing the background color and updating a counter at the top. Additional buttons will allow selecting all and deselecting all items. The entire implementation must be done using JavaScript only (no CSS files, styling through JS).
 Follow the best practices code
 
 ## Task Details
@@ -15,9 +15,9 @@ Example API response:
 json
 
 [
-  { "id": 1, "title": "Item 1", "description": "This is item 1" },
-  { "id": 2, "title": "Item 2", "description": "This is item 2" },
-  { "id": 3, "title": "Item 3", "description": "This is item 3" }
+{ "id": 1, "title": "Item 1", "description": "This is item 1" },
+{ "id": 2, "title": "Item 2", "description": "This is item 2" },
+{ "id": 3, "title": "Item 3", "description": "This is item 3" }
 ]
 
 Parse the response and store it in an array.
