@@ -1,3 +1,72 @@
+ 
+import {
+  createElement,
+  hideLoadingSpinner,
+  fetchCards,
+  createCounter,
+} from "./utilityFunction.js";
+import { DarkModeToggle } from "./atoms/DarkModeToggle/DarkModeToggle.js";
+import { generateCardHTML } from "./organism/generateCardHTML/generateCardHTML.js";
+import { Button } from "./atoms/buttons/buttons.js";
+import { API_URL, FALLBACK_IMAGE } from "./config.js";
+import { CardList } from "./Templates/CardList/CardList.js";
+import { setupGridContainer } from "./Molecule/setupGridContainer/setupGridContainer.js";
+ document.body.insertAdjacentHTML(
+  "afterbegin",
+  `
+  <div class="navbar">
+      <div class="navbar-logo">
+          <img src="logo.png" alt="Logo" />
+      </div>
+      <div class="navbar-links">
+          <a href="#home">Home</a>
+          <a href="./pages/about.js">About</a>
+          <a href="#services">Services</a>
+
+      </div>
+      <div class="navbar-toggle" id="navbar-toggle">
+          <span></span><span></span><span></span>
+      </div>
+  </div>
+`,
+);
+
+// Navbar Toggle Functionality
+// Get navbar toggle button and the navbar links
+const navbarToggle = document.querySelector(".navbar-toggle");
+const navbarLinks = document.querySelector(".navbar-links");
+const body = document.body;
+
+// Toggle the active class for navbar links and menu
+navbarToggle.addEventListener("click", () => {
+  navbarLinks.classList.toggle("active");
+  navbarToggle.classList.toggle("active");https://github.com/al6obasi2020/fullstack-training/pull/1/conflict?name=task1%252Findex.js&ancestor_oid=3c415d0d39a9f163f367539c81d8a40143cdb824&base_oid=3f6a2390fafac5e47bf9bda81d4718d52180dcce&head_oid=542c661c001ef3017f7f98b43e7a88e9d23250ac
+  body.classList.toggle("menu-active");
+});
+
+
+
+// Create the sticky div to hold the buttons and counter
+const divSticky = createElement("div", { className: "styleCounterSection" });
+
+divSticky.classList.add("sticky-bottom-right");
+
+// Function to create the element and then initialize the counter
+const countAndCreateElement = () => {
+  const counterElement = createElement(
+    "h3",
+    { id: "selected-counter" },
+    "Selected: 0", // Initial count text
+  );
+
+  // const counter = createCounter(0, counterElement);
+
+  const counter = createCounter(0, counterElement);
+  console.log(counterElement); // Append the counter element to the document
+  document.body.appendChild(counter.getElement());
+
+  return counter;
+ 
 console.log('Hello World');
 
 const API_URL = 'https://api.magicthegathering.io/v1/cards';
@@ -118,329 +187,66 @@ const fetchCards = async (SIZE = 70) => {
     } finally {
         hideLoadingSpinner(spinner);
     }
+ 
 };
 
-/**
- * Hide the loading spinner
- */
-const hideLoadingSpinner = (spinner) => {
-    if (spinner) {
-        spinner.style.display = 'none';
-    }
-};
 
-/**
- * Function to create a loading spinner
- */
-const createLoadingSpinner = () => {
-    const spinner = createElement('div', { id: 'loading-spinner' });
-    Object.assign(spinner.style, {
-        animation: 'spin 1s linear infinite',
-        border: '5px solid rgba(0, 0, 0, 0.2)',
-        borderRadius: '50%',
-        borderTop: '5px solid #28a745',
-        height: '50px',
-        left: '50%',
-        position: 'absolute',
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '50px',
-        zIndex: '1000',
-    });
-
-    document.body.appendChild(spinner);
-    return spinner;
-};
-
-/**
- * Generate Card HTML
- */
-const generateCardHTML = (card, counter) => {
-    const wrapper = createElement('div', {
-        className: 'card',
-        style: `
-            align-items: center;
-            background-color: white;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            display: flex;
-            overflow: hidden;
-            padding: 12px;
-            position: relative;
-            transition: transform 0.3s, background-color 0.3s;
-        `
-    });
-
-    wrapper.addEventListener("mouseover", () => {
-        wrapper.style.transform = "scale(1.02)";
-    });
-
-    wrapper.addEventListener("mouseout", () => {
-        wrapper.style.transform = "scale(1)";
-    });
-
-    const img = createElement('img', {
-        src: card.imageUrl,
-        onerror: function() { this.src = FALLBACK_IMAGE; },
-        style: 'width: 100px; height: auto; border-radius: 5px; margin-right: 15px;',
-        alt: card.name
-    });
-
-    const content = createElement('div', { style: 'flex-grow: 1;' });
-
-    const title = createElement('h3', {}, card.name);
-    const manaCost = createElement('p', {}, `Mana Cost: ${card.manaCost || 'N/A'}`);
-    const powerToughness = createElement('p', {}, `P/T: ${card.power || 'N/A'} / ${card.toughness || 'N/A'}`);
-
-    const details = createElement('div', {
-        style: `
-            background: #000;
-            border-top: 1px solid #ccc;
-            color: #fff;
-            display: none;
-            font-size: 14px;
-            left: 0;
-            padding: 5px 30px;
-            position: absolute;
-            text-align: left;
-            top: 0;
-            transition: bottom 0.3s ease-in-out;
-            width: 90%;
-        `
-    });
-    details.innerHTML = `
-        <p>Type: ${card.type}</p>
-        <p>Rarity: ${card.rarity}</p>
-        <p>Set: ${card.setName}</p>
-        <p>Text: ${card.text || 'No description'}</p>
-        <p>Artist: ${card.artist}</p>
-    `;
-
-    const selectButton = new Button('Select', () => handleBtnCardClick(card, wrapper, selectButton, counter));
-    const showMoreButton = new Button('Show More', () => {
-        details.style.display = details.style.display === 'none' ? 'block' : 'none';
-        showMoreButton.setText(details.style.display === 'none' ? 'Show More' : 'Show Less');
-    }, "secondary");
-
-    content.append(title, manaCost, powerToughness, selectButton.getElement(), showMoreButton.getElement(), details);
-    wrapper.append(img, content);
-
-    card.wrapper = wrapper;
-    card.button = selectButton;
-
-    return wrapper;
-};
-
-/**
- * Handle Card Selection
- */
 const handleBtnCardClick = (card, wrapper, button, counter) => {
-    card.toggleSelection();
-    wrapper.style.backgroundColor = card.isSelected ? '#d1ffd1' : '#fff';
-    button.setText(card.isSelected ? 'Deselect' : 'Select');
+  card.toggleSelection();
+  wrapper.style.backgroundColor = card.isSelected ? "#d1ffd1" : "#fff";
+  button.setText(card.isSelected ? "Deselect" : "Select");
 
-    if (card.isSelected) {
-        counter.increment();
-    } else {
-        counter.decrement();
-    }
+  if (card.isSelected) {
+    counter.increment();
+  } else {
+    counter.decrement();
+  }
 };
 
-/**
- * Card Class (Represents a single card)
- */
-class Card {
-    constructor(data) {
-        this.artist = data.artist;
-        this.button = null;
-        this.counter = data.counter;
-        this.id = data.id;
-        this.imageUrl = data.imageUrl || FALLBACK_IMAGE;
-        this.isSelected = false;
-        this.manaCost = data.manaCost;
-        this.name = data.name;
-        this.power = data.power;
-        this.rarity = data.rarity;
-        this.setName = data.setName;
-        this.text = data.text;
-        this.toughness = data.toughness;
-        this.type = data.type;
-        this.wrapper = null;
-    }
 
-    toggleSelection() {
-        this.isSelected = !this.isSelected;
-    }
-
-    draw () {
-        const wrapper = createElement('div', {
-            className: 'card',
-            style: `
-                align-items: center;
-                background-color: white;
-                border-radius: 8px;
-                border: 1px solid #ccc;
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-                cursor: pointer;
-                display: flex;
-                overflow: hidden;
-                padding: 12px;
-                position: relative;
-                transition: transform 0.3s, background-color 0.3s;
-            `
-        });
-    
-        wrapper.addEventListener("mouseover", () => {
-            wrapper.style.transform = "scale(1.02)";
-        });
-    
-        wrapper.addEventListener("mouseout", () => {
-            wrapper.style.transform = "scale(1)";
-        });
-    
-        const img = createElement('img', {
-            src: this.imageUrl,
-            onerror: function() { this.src = FALLBACK_IMAGE; },
-            style: 'width: 100px; height: auto; border-radius: 5px; margin-right: 15px;',
-            alt: this.name
-        });
-    
-        const content = createElement('div', { style: 'flex-grow: 1;' });
-    
-        const title = createElement('h3', {}, this.name);
-        const manaCost = createElement('p', {}, `Mana Cost: ${this.manaCost || 'N/A'}`);
-        const powerToughness = createElement('p', {}, `P/T: ${this.power || 'N/A'} / ${this.toughness || 'N/A'}`);
-    
-        const details = createElement('div', {
-            style: `
-                background: rgba(255, 255, 255, 0.9);
-                border-top: 1px solid #ccc;
-                color: #333;
-                display: none;
-                font-size: 14px;
-                left: 0;
-                padding: 10px;
-                position: absolute;
-                text-align: left;
-                top: 0;
-                transition: bottom 0.3s ease-in-out;
-                width: 100%;
-            `
-        });
-        details.innerHTML = `
-            <p>Type: ${this.type}</p>
-            <p>Rarity: ${this.rarity}</p>
-            <p>Set: ${this.setName}</p>
-            <p>Text: ${this.text || 'No description'}</p>
-            <p>Artist: ${this.artist}</p>
-        `;
-    
-        const selectButton = new Button('Select', () => handleBtnCardClick(this, wrapper, selectButton, this.counter));
-        const showMoreButton = new Button('Show More', () => {
-            details.style.display = details.style.display === 'none' ? 'block' : 'none';
-            showMoreButton.setText(details.style.display === 'none' ? 'Show More' : 'Show Less');
-        }, "secondary");
-    
-        content.append(title, manaCost, powerToughness, selectButton.getElement(), showMoreButton.getElement(), details);
-        wrapper.append(img, content);
-    
-        this.wrapper = wrapper;
-        this.button = selectButton;
-    
-        return wrapper;
-    };
-}
-
-/**
- * CardList Class (Handles the list of cards)
- */
-class CardList {
-    constructor(counter) {
-        this.cards = [];
-        this.counter = counter;
-    }
-
-    async loadCards() {
-        this.cards = await fetchCards();
-        this.draw();
-    }
-
-    draw() {
-        const container = setupGridContainer();
-        this.cards.forEach(card => {
-            container.appendChild(generateCardHTML(card, this.counter));
-        });
-
-        document.body.appendChild(container);
-    }
-
-    selectAll() {
-        this.cards.forEach(card => {
-            if (!card.isSelected) {
-                card.isSelected = true;
-                card.wrapper.style.backgroundColor = '#d1ffd1';
-                card.button.setText('Deselect');
-                this.counter.increment();
-            }
-        });
-    }
-
-    deselectAll() {
-        this.cards.forEach(card => {
-            if (card.isSelected) {
-                card.isSelected = false;
-                card.wrapper.style.backgroundColor = '#fff';
-                card.button.setText('Select');
-                this.counter.decrement();
-            }
-        });
-    }
-}
-
-/**
- * Function to set up the main layout of the page
- */
 const setupLayout = (cardList, counter) => {
-    Object.assign(document.body.style, {
-        fontFamily: 'Arial, sans-serif',
-        textAlign: 'center',
-        margin: '20px',
-    });
+  Object.assign(document.body.style, {
+    fontFamily: "Arial, sans-serif",
+    textAlign: "center",
+    margin: "20px",
+  });
 
-    document.body.appendChild(counter.getElement());
+  // Create buttons
+  const selectAllBtn = new Button("Select All", () => cardList.selectAll());
+  const deselectAllBtn = new Button(
+    "Deselect All",
+    () => {
+      cardList.deselectAll();
+      counter.reset();
+    },
+    "secondary",
+  );
 
-    const btnContainer = createElement('div', { style: 'margin: 20px;' });
+  // Create the dark mode toggle button
+  const darkModeToggle = new DarkModeToggle();
 
-    const selectAllBtn = new Button('Select All', () => cardList.selectAll());
-    const deselectAllBtn = new Button('Deselect All', () => {
-        cardList.deselectAll();
-        counter.reset();
-        
-    },'secondary');
+  // Clear and append elements to the sticky div
+  divSticky.innerHTML = "";
+  divSticky.appendChild(selectAllBtn.getElement());
+  divSticky.appendChild(deselectAllBtn.getElement());
+  divSticky.appendChild(counter.getElement());
+  divSticky.appendChild(darkModeToggle.getElement());
 
-    btnContainer.appendChild(selectAllBtn.getElement());
-    btnContainer.appendChild(deselectAllBtn.getElement());
-    document.body.appendChild(btnContainer);
-
-    const container = setupGridContainer();
-    document.body.appendChild(container);
+  document.body.appendChild(divSticky);
 };
-
 /**
  * Page Class (Handles page layout and UI setup)
  */
 class Page {
-    constructor() {
-        this.counter = createCounter(0);
-        this.cardList = new CardList(this.counter);
-    }
+  constructor() {
+    this.counter = countAndCreateElement();
+    this.cardList = new CardList(this.counter);
+  }
 
-    init() {
-        setupLayout(this.cardList, this.counter);
-        this.cardList.loadCards();
-    }
+  init() {
+    setupLayout(this.cardList, this.counter);
+    this.cardList.loadCards();
+  }
 }
 
 /**
