@@ -1,3 +1,5 @@
+import { Button } from "../components/atoms/Button/index.js";
+
 /**
  * Utility function to create HTML elements dynamically
  */
@@ -64,9 +66,73 @@ class Counter {
     }
 }
 
+const createGridOptions = (cards, onRemove, onAdd, onEdit) => {
+    return {
+        columnDefs: [
+            { field: "name", headerName: "Card Name", flex: 2 },
+            { field: "power", headerName: "Power", valueGetter: (params) => params.data.power ?? "N/A" },
+            { field: "rarity", headerName: "Rarity", flex: 2 },
+            { field: "artist", headerName: "Artist", flex: 2 },
+            {
+                field: "imageUrl",
+                headerName: "Image",
+                cellRenderer: (params) => `<img src="${params.value || FALLBACK_IMAGE}" alt="Card Image" width="50" />`
+            },
+            {
+                headerName: "Actions",
+                cellRenderer: (params) => {
+                    const container = document.createElement("div");
+                    container.style.display = "flex";
+                    container.style.gap = "8px";
+
+
+                    const addButton = document.createElement("button");
+                    addButton.innerHTML = "➕";
+                    addButton.style.cursor = "pointer";
+                    addButton.style.border = "none";
+                    addButton.style.background = "transparent";
+                    addButton.style.fontSize = "16px";
+                    addButton.addEventListener("click", () => onAdd(params.data));
+
+
+                    const editButton = document.createElement("button");
+                    editButton.innerHTML = "✏️";
+                    editButton.style.cursor = "pointer";
+                    editButton.style.border = "none";
+                    editButton.style.background = "transparent";
+                    editButton.style.fontSize = "16px";
+                    editButton.addEventListener("click", () => onEdit(params.data));
+
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.innerHTML = "❌";
+                    deleteButton.style.cursor = "pointer";
+                    deleteButton.style.border = "none";
+                    deleteButton.style.background = "transparent";
+                    deleteButton.style.fontSize = "16px";
+                    deleteButton.addEventListener("click", () => onRemove(params.data.id));
+
+                    container.append(addButton, editButton, deleteButton);
+                    return container;
+                },
+                width: 120
+            }
+        ],
+        defaultColDef: {
+            flex: 1,
+            filter: true,
+            floatingFilter: true,
+        },
+        rowData: cards,
+    };
+};
+
+
+
 export {
     Counter,
     createElement,
     cardStorage,
-    LocalStorageUtil
+    LocalStorageUtil,
+    createGridOptions,
 }
