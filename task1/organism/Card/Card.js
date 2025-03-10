@@ -26,6 +26,8 @@ export class Card {
     this.toughness = data.toughness;
     this.type = data.type;
     this.wrapper = null;
+    const selectedIds = JSON.parse(localStorage.getItem("selectedCards")) || [];
+    this.isSelected = selectedIds.includes(this.id);
   }
 
   toggleSelection() {
@@ -83,20 +85,7 @@ export class Card {
     );
 
     const details = createElement("div", {
-      style: `
-                background: rgba(255, 255, 255, 0.9);
-                border-top: 1px solid #ccc;
-                color: #333;
-                display: none;
-                font-size: 14px;
-                left: 0;
-                padding: 10px;
-                position: absolute;
-                text-align: left;
-                top: 0;
-                transition: bottom 0.3s ease-in-out;
-                width: 100%;
-            `,
+    className: "card-details"
     });
     details.innerHTML = `
             <p>Type: ${this.type}</p>
@@ -106,9 +95,11 @@ export class Card {
             <p>Artist: ${this.artist}</p>
         `;
 
-    const selectButton = new Button("Select", () =>
-      handleBtnCardClick(this, wrapper, selectButton, this.counter),
-    );
+        const selectButton = new Button(
+          this.isSelected ? "Deselect" : "Select",
+          () => handleBtnCardClick(this, wrapper, selectButton, this.counter)
+      );
+
     const showMoreButton = new Button(
       "Show More",
       () => {

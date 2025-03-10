@@ -1,5 +1,8 @@
 import { createElement } from "../../utilityFunction.js";
 import { Button } from ".././../atoms/buttons/buttons.js";
+import { handleBtnCardClick } from "../../atoms/handleBtnCardClick/handleBtnCardClick.js";
+
+
 export const generateCardHTML = (card, counter) => {
   const wrapper = createElement("div", {
     className: "card",

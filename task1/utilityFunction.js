@@ -3,15 +3,13 @@ import { API_URL, FALLBACK_IMAGE } from "./config.js";
 import { Card } from "./organism/Card/Card.js";
 import { Button } from "./atoms/buttons/buttons.js";
 
-// Now you can use the constants
-console.log(API_URL);
-console.log(FALLBACK_IMAGE);
+
 
 export const createElement = (
   tag,
   attributes = {},
   textContent = "",
-  isDarkMode = false,
+
 ) => {
   const element = document.createElement(tag);
   Object.entries(attributes).forEach(([key, value]) => {
@@ -22,40 +20,48 @@ export const createElement = (
   }
 
   // Apply dark mode class if needed
-  if (isDarkMode) {
-    element.classList.add("dark-mode-text");
-  } else {
-    element.classList.add("light-mode-text");
-  }
+
 
   return element;
 };
 
 /**
  * Counter with Closure
- */
+ */ export const createCounter = (initialCount = 0, counterElement) => {
+  const storageKey = 'counterValue'; // Key for local storage
+  const savedCount = parseInt(localStorage.getItem(storageKey), 10);
 
-export const createCounter = (count = 0, counterElement) => {
+  // Use the saved count if it exists, otherwise fall back to the initial count
+  let count = !isNaN(savedCount) ? savedCount : initialCount;
+
   // Store the initial text and replace the count part later
-  const initialText = counterElement.innerText; // "Selected: 0" or whatever was passed
+  const initialText = counterElement.innerText;
+
+  // Initialize the element with the correct count
+  counterElement.innerText = initialText.replace(/\d+/, count);
+
+  // Function to save count to local storage
+  const saveCountToStorage = () => {
+    localStorage.setItem(storageKey, count);
+  };
 
   return {
     getElement: () => counterElement,
     getCount: () => count,
     increment: () => {
       count++;
-      // Update the text content dynamically by replacing the count part
       counterElement.innerText = initialText.replace(/\d+/, count);
+      saveCountToStorage();
     },
     decrement: () => {
       if (count > 0) count--;
-      // Update the text content dynamically by replacing the count part
       counterElement.innerText = initialText.replace(/\d+/, count);
+      saveCountToStorage();
     },
     reset: () => {
       count = 0;
-      // Reset the text content back to the initial state
       counterElement.innerText = initialText.replace(/\d+/, count);
+      saveCountToStorage();
     },
   };
 };

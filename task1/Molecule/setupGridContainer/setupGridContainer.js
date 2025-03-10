@@ -1,8 +1,8 @@
 import { createElement } from "../../utilityFunction.js";
 export const setupGridContainer = () => {
   const container =
-    document.getElementById("card-container") ||
-    createElement("div", { id: "card-container" });
+    document.getElementById("card-container")
+
 
   container.innerHTML = "";
   Object.assign(container.style, {
