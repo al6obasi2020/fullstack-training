@@ -1,0 +1,228 @@
+.services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.header-container {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.services-container h1 {
+    font-size: 42px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.intro-text {
+    font-size: 20px;
+    color: #586069;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+.services-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.service-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    padding: 35px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 100%;
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+    opacity: 0.8;
+}
+
+.service-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.service-card h2 {
+    font-size: 26px;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.service-description {
+    font-size: 17px;
+    color: #586069;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.features-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.features-list li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #586069;
+}
+
+.features-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.learn-more-btn {
+    background-color: transparent;
+    color: #3498db;
+    border: 2px solid #3498db;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.learn-more-btn:hover {
+    background-color: #3498db;
+    color: white;
+}
+
+.testimonial-section {
+    background-color: #f8fafc;
+    padding: 50px;
+    border-radius: 12px;
+    margin-bottom: 50px;
+    text-align: center;
+    position: relative;
+}
+
+.quote-icon {
+    font-size: 80px;
+    color: #e1e8ed;
+    line-height: 1;
+    height: 40px;
+    margin-bottom: 20px;
+}
+
+.quote-text {
+    font-size: 24px;
+    color: #2c3e50;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 25px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.author-info {
+    font-size: 18px;
+    color: #586069;
+}
+
+.cta-container {
+    text-align: center;
+    background-color: #3498db;
+    padding: 50px;
+    border-radius: 12px;
+    color: white;
+    margin-top: 30px;
+}
+
+.cta-container p {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.cta-button {
+    background-color: white;
+    color: #3498db;
+    border: none;
+    padding: 14px 35px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.cta-button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: scale(1.05);
+}
+
+/* Animation */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .services-container h1 {
+        font-size: 32px;
+    }
+    
+    .intro-text {
+        font-size: 18px;
+    }
+    
+    .services-section {
+        grid-template-columns: 1fr;
+    }
+    
+    .service-card {
+        padding: 25px;
+    }
+    
+    .quote-text {
+        font-size: 20px;
+    }
+    
+    .testimonial-section {
+        padding: 30px;
+    }
+}

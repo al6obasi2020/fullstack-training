@@ -1,0 +1,69 @@
+/* Define CSS variables for magic numbers */
+:root {
+    --calendar-margin-top: 20px;
+    --day-width: 40px;
+    --day-height: 40px;
+    --day-margin: 5px;
+    --day-border-radius: 5px;
+    --hover-background-color: #ddd;
+    --current-month-background-color: #f0f0f0;
+    --card-container-width: 100%;
+    --card-width: 60%;
+    --card-margin-top: 20px;
+    --card-border-radius: 5px;
+    --card-padding: 20px;
+    --card-background-color: #fff;
+    --month-name-font-size: 24px;
+    --month-name-margin-bottom: 10px;
+  }
+
+  /* Calendar container */
+  .calendar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: 70%;
+    margin-top: var(--calendar-margin-top);
+  }
+
+  /* Day styling */
+  .day {
+    width: var(--day-width);
+    height: var(--day-height);
+    margin: var(--day-margin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--day-border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .day:hover {
+    background-color: var(--hover-background-color);
+  }
+
+  /* Current month styling */
+  .current-month {
+    background-color: var(--current-month-background-color);
+  }
+
+  /* Card container */
+
+
+  /* Card styling */
+  .card {
+    width: var(--card-width);
+    margin-top: var(--card-margin-top);
+    border: 1px solid #ccc;
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    background-color: var(--card-background-color);
+  }
+
+  /* Month name styling */
+  .month-name {
+    text-align: center;
+    font-size: var(--month-name-font-size);
+    margin-bottom: var(--month-name-margin-bottom);
+  }

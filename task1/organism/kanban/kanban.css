@@ -1,0 +1,151 @@
+/* Define CSS variables for magic numbers */
+:root {
+  --kanban-margin-left: 5%;
+  --kanban-margin-right: 5%;
+  --kanban-gap: 20px;
+  --board-width: 300px;
+  --board-border-radius: 8px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --board-border-color: #ddd;
+  --header-background-color: #007BFF;
+  --header-color: #ffffff;
+  --header-padding: 10px;
+  --image-width: 20px;
+  --image-height: 20px;
+  --image-border-radius: 50%;
+  --image-margin-right: 10px;
+  --font-weight-bold: bold;
+  --content-padding: 10px;
+  --content-min-height: 200px;
+  --content-background-color: #f8f9fa;
+  --card-border-radius: 4px;
+  --card-margin-bottom: 10px;
+  --card-padding: 10px;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --card-image-width: 50%;
+  --card-image-height: 10%;
+  --card-name-margin-top: 10px;
+  --dragging-opacity: 0.5;
+  --drag-over-background-color: #e6f2ff;
+  --stats-margin-bottom: 20px;
+  --stats-padding: 10px;
+  --stats-background-color: #f8f9fa;
+  --stats-border-radius: 4px;
+  --counter-font-size: 12px;
+  --counter-font-weight: bold;
+  --counter-height: 24px;
+  --counter-line-height: 24px;
+  --counter-margin-left: 8px;
+  --counter-width: 24px;
+}
+
+/* Kanban board container */
+.kanban-board-kanban {
+  display: flex;
+  margin-left: var(--kanban-margin-left);
+  margin-right: var(--kanban-margin-right);
+  gap: var(--kanban-gap);
+}
+
+/* Board container */
+.board-kanban {
+  width: var(--board-width);
+  background-color: #ffffff;
+  border-radius: var(--board-border-radius);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--board-border-color);
+}
+
+/* Board header */
+.board-header-kanban {
+  display: flex;
+  align-items: center;
+  background-color: var(--header-background-color);
+  color: var(--header-color);
+  padding: var(--header-padding);
+  border-top-left-radius: var(--board-border-radius);
+  border-top-right-radius: var(--board-border-radius);
+}
+
+/* Board image */
+.board-image-kanban {
+  width: var(--image-width);
+  height: var(--image-height);
+  border-radius: var(--image-border-radius);
+  margin-right: var(--image-margin-right);
+}
+
+/* Board name */
+.board-name-kanban {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Board content */
+.board-content-kanban {
+  padding: var(--content-padding);
+  min-height: var(--content-min-height);
+  background-color: var(--content-background-color);
+}
+
+/* Card */
+.card-kanban-kanban {
+  background-color: #ffffff;
+  border: 1px solid var(--board-border-color);
+  border-radius: var(--card-border-radius);
+  margin-bottom: var(--card-margin-bottom);
+  padding: var(--card-padding);
+  box-shadow: var(--card-shadow);
+  cursor: grab;
+}
+
+/* Card active state */
+.card-kanban-kanban:active {
+  cursor: grabbing;
+}
+
+/* Card image */
+.card-image-kanban {
+  width: var(--card-image-width);
+  height: var(--card-image-height);
+  border-radius: var(--card-border-radius);
+}
+
+/* Card name */
+.card-name-kanban {
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--card-name-margin-top);
+}
+
+/* Dragging card */
+.card-kanban-kanban.dragging {
+  opacity: var(--dragging-opacity);
+}
+
+/* Board content on drag over */
+.board-content-kanban.drag-over {
+  background-color: var(--drag-over-background-color);
+}
+
+/* Kanban stats */
+.kanban-stats {
+  margin-bottom: var(--stats-margin-bottom);
+  padding: var(--stats-padding);
+  background-color: var(--stats-background-color);
+  border: 1px solid var(--board-border-color);
+  border-radius: var(--stats-border-radius);
+}
+
+/* Card counter */
+.card-counter {
+  background-color: var(--stats-background-color);
+  border-radius: 50%;
+  color: var(--header-background-color);
+  display: inline-block;
+  font-size: var(--counter-font-size);
+  font-weight: var(--counter-font-weight);
+  height: var(--counter-height);
+  line-height: var(--counter-line-height);
+  margin-left: var(--counter-margin-left);
+  text-align: center;
+  width: var(--counter-width);
+}
